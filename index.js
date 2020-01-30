@@ -1,1 +1,13 @@
+const express = require('express');
 
+//crear el serv
+const app = express();
+
+
+// puerto de la app
+const PORT = process.env.PORT || 4000;
+
+//arrancar serv
+app.listen(PORT, () => {
+    console.log(`El servidor esta funcionando en puerto ${PORT}`);
+});
