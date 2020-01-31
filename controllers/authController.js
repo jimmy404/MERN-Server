@@ -11,4 +11,40 @@ exports.autenticarUsuario = async (req, res) => {
             return res.status(400).json({errores: errores.array()})
         }
 
+        //extraer email & pass
+        const {email, password} = req.body;
+        try {
+            //revisar usuario reg
+            let usuario = await Usuario.findOne({email});
+            if(!usuario){
+                return res.status(400).json({msg: 'El usuario no existe'})
+            }
+
+            //revisar pass
+            const passCorrecto = await bcryptjs.compare(password, usuario.password);
+            if(!passCorrecto){
+                return res.status(400).json({msg: 'Password Incorrecto'})
+            }
+
+            //todo ok, crear y firmar token
+
+        const payload = {
+            usuario: {
+                id: usuario.id
+            }
+        };
+
+        //firmar JWT
+        jwt.sign(payload, process.env.SECRETA,{
+            expiresIn: 3600
+        }, (error, token) => {
+            if(error) throw error;
+            //mensaje de confirmacion
+            res.json({token});
+        });
+
+        } catch (error) {
+            console.log(error);
+        }
+
 }
