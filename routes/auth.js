@@ -5,7 +5,7 @@ const {check} = require('express-validator');
 const authController = require('../controllers/authController');
 
 //crear usuario - Define el middleware
-// api/usuario - metodo post - express
+// api/auth - metodo post - express
 router.post('/',
     [
         check('email', 'Agrega un email valido').isEmail(),
