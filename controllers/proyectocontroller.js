@@ -95,6 +95,8 @@ exports.eliminarProyecto = async (req, res) => {
         //eliminar proyecto
         await Proyecto.findOneAndRemove({_id: req.params.id});
         res.json({msg: 'Proyecto eliminado'})
+
+
     } catch (error) {
         console.log(error);
         res.status(500).send('Error en el servidor')
