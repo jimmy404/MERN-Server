@@ -10,4 +10,17 @@ exports.crearTarea = async (req, res) => {
     if(!errores.isEmpty()){
         return res.status(400).json({errores: errores.array()})
     }
+
+    //extraer proyecto y comprobar si existe
+    const { proyecto } = req.body;
+
+    try {
+        const proyecto = await Proyecto.findById(proyecto);
+        if(!proyecto){
+            return res.status(404).json({msg: 'Proyecto no encontrado'})
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error')
+    }
 }
