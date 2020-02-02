@@ -69,7 +69,7 @@ exports.actualizarTarea = async (req, res) => {
         //revisar si la terea existe o no
         const tareaExiste = await Tarea.findById(req.params.id);
 
-        if(!tarea){
+        if(!tareaExiste){
             return res.status(404).json({msg: 'No existe esa tarea'});
         }
 
