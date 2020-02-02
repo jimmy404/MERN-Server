@@ -67,7 +67,7 @@ exports.actualizarTarea = async (req, res) => {
         const { proyecto, nombre, estado } = req.body;
 
         //revisar si la terea existe o no
-        const tarea = await Tarea.findById(req.params.id);
+        let tarea = await Tarea.findById(req.params.id);
 
         if(!tarea){
             return res.status(404).json({msg: 'No existe esa tarea'});
@@ -85,8 +85,10 @@ exports.actualizarTarea = async (req, res) => {
         const nuevaTarea = {};
         if(nombre) nuevaTarea.nombre = nombre;
         if(estado) nuevaTarea.estado = estado;
-        //guardar la tarea
 
+        //guardar la tarea
+        tarea = await Tarea.findOneAndUpdate({_id: req.params.id}, nuevaTarea, {new: true});
+        res.json({tarea});
 
     } catch (error) {
         console.log(error);
