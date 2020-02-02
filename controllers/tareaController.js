@@ -67,9 +67,9 @@ exports.actualizarTarea = async (req, res) => {
         const { proyecto, nombre, estado } = req.body;
 
         //revisar si la terea existe o no
-        const tareaExiste = await Tarea.findById(req.params.id);
+        const tarea = await Tarea.findById(req.params.id);
 
-        if(!tareaExiste){
+        if(!tarea){
             return res.status(404).json({msg: 'No existe esa tarea'});
         }
 
@@ -81,15 +81,13 @@ exports.actualizarTarea = async (req, res) => {
             return res.status(401).json({msg: 'No autorizado'});
         }
 
-
         //crear un objeto con la nueva informacion
         const nuevaTarea = {};
-        if(nombre){
-            nuevaTarea.nombre = nombre;
-        }
-        if(estado){
-            nuevaTarea.estado = estado;
-        }
+        if(nombre) nuevaTarea.nombre = nombre;
+        if(estado) nuevaTarea.estado = estado;
+        //guardar la tarea
+
+
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');
