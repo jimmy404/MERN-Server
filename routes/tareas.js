@@ -21,6 +21,12 @@ router.get('/',
     tareaController.obtenerTareas
 )
 
+//actualizando tareas
+
+router.put('/:id',
+    auth,
+    tareaController.actualizarTarea
+)
 
 
 module.exports = router;
